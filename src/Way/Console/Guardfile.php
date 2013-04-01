@@ -33,7 +33,7 @@ class Guardfile {
 	{
 		$this->file = $file;
 
-		$this->path = $path ? $path : base_path();
+		$this->path = $path ?: base_path();
 	}
 
 	/**
