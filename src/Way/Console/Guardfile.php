@@ -29,10 +29,11 @@ class Guardfile {
 	 * @param  string $path
 	 * @return void
 	 */
-	public function __construct(Filesystem $file, $path)
+	public function __construct(Filesystem $file, $path = null)
 	{
 		$this->file = $file;
-		$this->path	= $path;
+
+		$this->path = $path ? $path : base_path();
 	}
 
 	/**
