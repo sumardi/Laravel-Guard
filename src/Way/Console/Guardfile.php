@@ -125,7 +125,6 @@ class Guardfile {
 	 */
 	public function compile($stub, $plugin)
 	{
-		var_dump('called');
 		$stub = $this->applyPathsToStub($stub);
 		$stub = $this->applyOptions($stub, $plugin);
 
