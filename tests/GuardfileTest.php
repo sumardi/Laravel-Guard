@@ -72,6 +72,57 @@ class GuardfileTest extends \PHPUnit_Framework_TestCase {
 		$guardFile->put('foo');
 	}
 
+	public function testGetStubs()
+	{
+		$guardFile = m::mock('Way\Console\Guardfile')->makePartial();
+
+		$guardFile->shouldReceive('getPluginStub')
+				  ->times(2)
+				  ->with(m::anyOf('sass', 'coffeescript'));
+
+		$guardFile->shouldReceive('compile')
+				   ->times(2)
+				   ->with(m::any(), m::anyOf('sass', 'coffeescript'))
+				   ->andReturn('foo');
+
+		$content = $guardFile->getStubs(['sass', 'coffeescript']);
+
+		$this->assertEquals("foo\n\nfoo", $content);
+	}
+
+	public function testGetPluginStub()
+	{
+		$file = m::mock('Illuminate\Filesystem\Filesystem');
+
+		$file->shouldReceive('exists')
+			 ->once()
+			 ->andReturn(true);
+
+		$file->shouldReceive('get')
+			 ->once()
+			 ->andReturn('foo');
+
+		$guardFile = new Guardfile($file);
+
+		$stub = $guardFile->getPluginStub('sass');
+
+		$this->assertEquals('foo', $stub);
+	}
+
+	/**
+	 * @expectedException Way\Console\FileNotFoundException
+	 */
+	public function testGetPluginStubThrowsErrorIfFileDoesNotExist()
+	{
+		$file = m::mock('Illuminate\Filesystem\Filesystem');
+
+		$file->shouldReceive('exists')
+			 ->once()
+			 ->andReturn(false); // simulate file doesn't exist
+
+		(new Guardfile($file))->getPluginStub('sass');
+	}
+
 	protected function makePublic($obj, $property)
 	{
 		$reflect = new \ReflectionObject($obj);
