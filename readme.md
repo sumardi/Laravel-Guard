@@ -146,7 +146,7 @@ And:
 Will create:
 
 ```html
-<link rel="stylesheet" href="/js/scripts.min.js">
+<script src="/js/scripts.min.js"></script>
 ```
 
 You can optionally pass an argument to either of these functions, which should reference a file name that is relative to what you have set under `js_path` or `css_path` in the configuration file. For example, to pull in the stylesheet, `public/css/normalize.css`, and assuming that `css_path` is set to `public/css`, simply do:
