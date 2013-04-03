@@ -157,7 +157,7 @@ class Guardfile {
 		return preg_replace_callback('/{{([a-z]+?)Path}}/i', function($matches) {
 			$language = $matches[1];
 
-			return $this->config->get("guard-laravel::guard.{$language}_path");
+			return $this->getConfigOption("{$language}_path");
 		}, $stub);
 	}
 
