@@ -159,14 +159,14 @@ class GuardfileTest extends \PHPUnit_Framework_TestCase {
 		$guardFile->shouldReceive('getConfigOption')
 				  ->with('/_path$/i')
 				  ->times(2)
-				  ->andReturn('foo');
+				  ->andReturn('assets', 'css');
 
 		$guardFile->shouldReceive('getConfigOption')
 				  ->with('guard_options.sass')
 				  ->once()
 				  ->andReturn(['style' => ':compressed']);
 
-		// Let's make sure that that the before stub, once compiled, looks like the after stub.
+		// Let's make sure that the before stub, once compiled, looks like the after stub.
 		$compiled = $guardFile->compile(file_get_contents(__DIR__.'/stubs/single-stub-before.txt'), 'sass');
 		$this->assertEquals(file_get_contents(__DIR__.'/stubs/single-stub-after.txt'), $compiled);
 	}
