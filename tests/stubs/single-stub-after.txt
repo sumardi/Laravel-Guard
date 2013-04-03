@@ -1,0 +1,1 @@
+guard :sass, :input => 'foo/sass', :output => 'foo', :style => :compressed

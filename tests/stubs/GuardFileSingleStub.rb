@@ -1,1 +1,0 @@
-guard 'sass', :input => 'path/sass', :output => 'path'
