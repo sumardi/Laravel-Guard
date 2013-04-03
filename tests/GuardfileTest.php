@@ -18,7 +18,9 @@ class GuardfileTest extends \PHPUnit_Framework_TestCase {
 	public function testStoresFilesystemOnInstance()
 	{
 		$file = m::mock('Illuminate\Filesystem\Filesystem');
-		$guardFile = new Guardfile($file);
+		$config = m::mock('Illuminate\Config\Repository');
+
+		$guardFile = new Guardfile($file, $config);
 
 		$fileProperty = $this->makePublic($guardFile, 'file');
 		$this->assertInstanceOf('Illuminate\Filesystem\Filesystem', $fileProperty->getValue($guardFile));
@@ -27,7 +29,9 @@ class GuardfileTest extends \PHPUnit_Framework_TestCase {
 	public function testDefaultPath()
 	{
 		$file = m::mock('Illuminate\Filesystem\Filesystem');
-		$guardFile = new Guardfile($file);
+		$config = m::mock('Illuminate\Config\Repository');
+
+		$guardFile = new Guardfile($file, $config);
 
 		$pathProperty = $this->makePublic($guardFile, 'path');
 
@@ -37,7 +41,9 @@ class GuardfileTest extends \PHPUnit_Framework_TestCase {
 	public function testCanSetPathUponInstantiation()
 	{
 		$file = m::mock('Illuminate\Filesystem\Filesystem');
-		$guardFile = new Guardfile($file, 'foo/bar');
+		$config = m::mock('Illuminate\Config\Repository');
+
+		$guardFile = new Guardfile($file, $config, 'foo/bar');
 
 		$pathProperty = $this->makePublic($guardFile, 'path');
 
@@ -47,7 +53,8 @@ class GuardfileTest extends \PHPUnit_Framework_TestCase {
 	public function testGetPath()
 	{
 		$file = m::mock('Illuminate\Filesystem\Filesystem');
-		$guardFile = new Guardfile($file);
+		$config = m::mock('Illuminate\Config\Repository');
+		$guardFile = new Guardfile($file, $config);
 
 		$this->assertEquals('/Guardfile', $guardFile->getPath());
 	}
@@ -55,7 +62,8 @@ class GuardfileTest extends \PHPUnit_Framework_TestCase {
 	public function testCanGetContentsOfGuardfile()
 	{
 		$file = m::mock('Illuminate\Filesystem\Filesystem');
-		$guardFile = new Guardfile($file);
+		$config = m::mock('Illuminate\Config\Repository');
+		$guardFile = new Guardfile($file, $config);
 
 		$file->shouldReceive('get')->once()->with('/Guardfile');
 
@@ -65,7 +73,8 @@ class GuardfileTest extends \PHPUnit_Framework_TestCase {
 	public function testCanPutToGuardFile()
 	{
 		$file = m::mock('Illuminate\Filesystem\Filesystem');
-		$guardFile = new Guardfile($file);
+		$config = m::mock('Illuminate\Config\Repository');
+		$guardFile = new Guardfile($file, $config);
 
 		$file->shouldReceive('put')->once()->with('/Guardfile', 'foo');
 
@@ -93,6 +102,7 @@ class GuardfileTest extends \PHPUnit_Framework_TestCase {
 	public function testGetPluginStub()
 	{
 		$file = m::mock('Illuminate\Filesystem\Filesystem');
+		$config = m::mock('Illuminate\Config\Repository');
 
 		$file->shouldReceive('exists')
 			 ->once()
@@ -102,7 +112,7 @@ class GuardfileTest extends \PHPUnit_Framework_TestCase {
 			 ->once()
 			 ->andReturn('foo');
 
-		$guardFile = new Guardfile($file);
+		$guardFile = new Guardfile($file, $config);
 
 		$stub = $guardFile->getPluginStub('sass');
 
@@ -115,12 +125,29 @@ class GuardfileTest extends \PHPUnit_Framework_TestCase {
 	public function testGetPluginStubThrowsErrorIfFileDoesNotExist()
 	{
 		$file = m::mock('Illuminate\Filesystem\Filesystem');
+		$config = m::mock('Illuminate\Config\Repository');
 
 		$file->shouldReceive('exists')
 			 ->once()
 			 ->andReturn(false); // simulate file doesn't exist
 
-		(new Guardfile($file))->getPluginStub('sass');
+		(new Guardfile($file, $config))->getPluginStub('sass');
+	}
+
+	public function testGetFilesToConcat()
+	{
+		$cssConcat = ['main.css', 'buttons.css', 'vendor/normalize.css', 'vendor/libs/thing.css'];
+
+		$guardFile = m::mock('Way\Console\Guardfile')->makePartial();
+
+		$guardFile->shouldReceive('getConfigOption')
+				  ->with('css_concat')
+				  ->once()
+				  ->andReturn($cssConcat);
+
+		$result = $guardFile->getFilesToConcat('css');
+
+		$this->assertEquals(['main', 'buttons', 'vendor/normalize', 'vendor/libs/thing'], $result);
 	}
 
 	protected function makePublic($obj, $property)

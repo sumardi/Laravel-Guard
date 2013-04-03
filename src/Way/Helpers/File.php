@@ -35,10 +35,10 @@ class File {
 			// If Symfony's Finder component was used...
 			if (method_exists($file, 'getRelativePathName'))
 			{
-				return preg_replace('/\.(css|js)$/', '', $file->getRelativePathName());
+				$file = $file->getRelativePathName();
 			}
 
-			return pathinfo($file, PATHINFO_FILENAME);
+			return preg_replace('/\.(css|js)$/', '', $file);
 		}, $fileList);
 	}
 

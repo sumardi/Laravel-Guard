@@ -1,6 +1,7 @@
 <?php namespace Way\Console;
 
 use Illuminate\Filesystem\Filesystem;
+use Illuminate\Config\Repository as Config;
 use Way\Helpers\File as FileHelpers;
 use Way\Helpers\Helpers as Helpers;
 
@@ -16,6 +17,13 @@ class Guardfile {
 	protected $file;
 
 	/**
+	 * Config Instance
+	 *
+	 * @var Illuminate\Config\Repository
+	 */
+	protected $config;
+
+	/**
 	 * Base path to where Guardfile is store
 	 *
 	 * @var string
@@ -29,10 +37,10 @@ class Guardfile {
 	 * @param  string $path
 	 * @return void
 	 */
-	public function __construct(Filesystem $file, $path = null)
+	public function __construct(Filesystem $file, Config $config, $path = null)
 	{
 		$this->file = $file;
-
+		$this->config = $config;
 		$this->path = $path ?: base_path();
 	}
 
@@ -73,9 +81,9 @@ class Guardfile {
 	 * @param  string $option
 	 * @return mixed
 	 */
-	protected function getConfigOption($option)
+	public function getConfigOption($option)
 	{
-		return \Config::get("guard-laravel::guard.{$option}");
+		return $this->config->get("guard-laravel::guard.{$option}");
 	}
 
 	/**
@@ -149,7 +157,7 @@ class Guardfile {
 		return preg_replace_callback('/{{([a-z]+?)Path}}/i', function($matches) {
 			$language = $matches[1];
 
-			return \Config::get("guard-laravel::guard.{$language}_path");
+			return $this->config->get("guard-laravel::guard.{$language}_path");
 		}, $stub);
 	}
 

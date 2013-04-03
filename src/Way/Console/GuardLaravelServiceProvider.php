@@ -34,7 +34,7 @@ class GuardLaravelServiceProvider extends ServiceProvider {
 	{
 		$this->app['guard.make'] = $this->app->share(function($app)
 		{
-			$guardFile = new Guardfile($app['files'], base_path());
+			$guardFile = new Guardfile($app['files'], $app['config'], base_path());
 			$generator = new GuardGenerator($app['files'], $guardFile);
 			$gem = new Gem;
 
@@ -64,7 +64,7 @@ class GuardLaravelServiceProvider extends ServiceProvider {
 	{
 		$this->app['guard.refresh'] = $this->app->share(function($app)
 		{
-			$guardFile = new Guardfile($app['files'], base_path());
+			$guardFile = new Guardfile($app['files'], $app['config'], base_path());
 
 			return new GuardRefreshCommand($guardFile);
 		});
