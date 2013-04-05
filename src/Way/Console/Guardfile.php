@@ -154,10 +154,12 @@ class Guardfile {
 	 */
 	public function applyPathsToStub($stub)
 	{
-		return preg_replace_callback('/{{([a-z]+?)Path}}/i', function($matches) {
+		$self = $this; // 5.3 support :(
+
+		return preg_replace_callback('/{{([a-z]+?)Path}}/i', function($matches) use($self) {
 			$language = $matches[1];
 
-			return $this->getConfigOption("{$language}_path");
+			return $self->getConfigOption("{$language}_path");
 		}, $stub);
 	}
 
