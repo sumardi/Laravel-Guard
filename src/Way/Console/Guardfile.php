@@ -216,7 +216,7 @@ class Guardfile {
 		if (starts_with($plugin, 'concat'))
 		{
 			$language = substr($plugin, 7);
-			$stub = preg_replace('/guard :concat, type: "' . $language . '".+/i', $stub, $this->getContents());
+			$stub = preg_replace('/guard :concat, :type => "' . $language . '".+/i', $stub, $this->getContents());
 		}
 		else
 		{
