@@ -12,7 +12,7 @@ This plugin improves asset management in Laravel, by:
 
 ## Installation
 
-> Before continuing, this package requires Ruby and Rubygems. Please install those first
+> Before continuing, this package requires Ruby 1.9.2 (or higher) and Rubygems. Please install those first
 
 Install this package through Composer. To your `composer.json` file, add:
 
