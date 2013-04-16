@@ -99,7 +99,7 @@ Once installed, run your server and click the LiveReload icon next to your addre
 
 When you run `php artisan guard:watch`, in addition to compiling assets, it will also automatically run your tests when applicable files are saved.
 
-> **Mac Users**: Want native notifications? `gem install terminal-guard-notifier`, and you're all set to go!
+> **Mac Users**: Want native notifications? `gem install terminal-notifier-guard`, and you're all set to go!
 
 Guard will run PHPUnit:
 
