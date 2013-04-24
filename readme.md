@@ -12,7 +12,7 @@ This plugin improves asset management in Laravel, by:
 
 ## Installation
 
-> Before continuing, this package requires Ruby and Rubygems. Please install those first
+> Before continuing, this package requires Ruby 1.9.2 (or higher) and Rubygems. Please install those first
 
 Install this package through Composer. To your `composer.json` file, add:
 
@@ -99,7 +99,7 @@ Once installed, run your server and click the LiveReload icon next to your addre
 
 When you run `php artisan guard:watch`, in addition to compiling assets, it will also automatically run your tests when applicable files are saved.
 
-> **Mac Users**: Want native notifications? `gem install terminal-guard-notifier`, and you're all set to go!
+> **Mac Users**: Want native notifications? `gem install terminal-notifier-guard`, and you're all set to go!
 
 Guard will run PHPUnit:
 
