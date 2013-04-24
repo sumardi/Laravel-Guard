@@ -12,8 +12,10 @@ if ( ! function_exists('stylesheet'))
 	 */
 	function stylesheet($path = 'styles.min.css')
 	{
+		$publicDirName = basename(public_path());
+
 		$path = \Config::get('guard-laravel::guard.css_path') . "/$path";
-		$path = str_replace('public', '', $path);
+		$path = str_replace($publicDirName, '', $path);
 
 		return "<link rel='stylesheet' href='{$path}'>";
 	}
