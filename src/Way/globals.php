@@ -33,8 +33,10 @@ if ( ! function_exists('script'))
 	 */
 	function script($path = 'scripts.min.js')
 	{
+		$publicDirName = basename(public_path());
+
 		$path = \Config::get('guard-laravel::guard.js_path') . "/$path";
-		$path = str_replace('public', '', $path);
+		$path = str_replace($publicDirName, '', $path);
 
 		return "<script src='$path'></script>";
 	}
