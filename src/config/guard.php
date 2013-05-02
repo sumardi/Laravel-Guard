@@ -48,9 +48,6 @@ return array(
 	*/
 	'assets_path' => 'app/assets',
 
-
-
-
 	/*
 	|--------------------------------------------------------------------------
 	| JavaScript Concatenation
