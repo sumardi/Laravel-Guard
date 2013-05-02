@@ -26,6 +26,18 @@ return array(
 
 	/*
 	|--------------------------------------------------------------------------
+	| Base Path for Compile Assets
+	|--------------------------------------------------------------------------
+	|
+	| If you need to specify a custom directory for where assets should be
+	| compiled, then update this setting, as needed. If you're unsure, just
+	| leave this as it is.
+	|
+	*/
+	'compile_path' => 'public',
+
+	/*
+	|--------------------------------------------------------------------------
 	| The Path To Your Assets Directory
 	|--------------------------------------------------------------------------
 	|
@@ -35,6 +47,9 @@ return array(
 	|
 	*/
 	'assets_path' => 'app/assets',
+
+
+
 
 	/*
 	|--------------------------------------------------------------------------
