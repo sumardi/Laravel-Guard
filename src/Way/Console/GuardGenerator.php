@@ -72,6 +72,9 @@ class GuardGenerator {
 
         // We'll store a space separated list of all requested plugins.
         $this->file->put($logPath .'/plugins.txt', json_encode($plugins));
+
+        // Add .gitignore
+        $this->file->put($logPath . '/.gitignore', "*\r\n!.gitignore");
     }
 
 }
